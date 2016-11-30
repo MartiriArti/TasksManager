@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TasksManager</string>
+    <string name="do_not_show_splash">Off Splash</string>
+</resources>
