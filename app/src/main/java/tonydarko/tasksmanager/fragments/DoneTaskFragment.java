@@ -1,7 +1,6 @@
 package tonydarko.tasksmanager.fragments;
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +9,7 @@ import android.view.ViewGroup;
 
 import tonydarko.tasksmanager.R;
 
-public class DoneTaskFragment extends Fragment {
-
-    RecyclerView rvDoneTasks;
-    RecyclerView.LayoutManager layoutManager;
+public class DoneTaskFragment extends TaskFragment {
 
     public DoneTaskFragment() {
         // Required empty public constructor
@@ -26,9 +22,9 @@ public class DoneTaskFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_done_task, container, false);
 
-        rvDoneTasks = (RecyclerView) rootView.findViewById(R.id.rvDoneTasks);
-        layoutManager = new LinearLayoutManager(getActivity());
-        rvDoneTasks.setLayoutManager(layoutManager);
+       RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rvDoneTasks);
+       RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
 
         return rootView;
     }
