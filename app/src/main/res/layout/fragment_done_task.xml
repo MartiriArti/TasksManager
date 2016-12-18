@@ -4,10 +4,14 @@
     android:layout_height="match_parent"
     tools:context="tonydarko.tasksmanager.fragments.DoneTaskFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvDoneTasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Done" />
+        android:scrollbars="vertical"
+        android:clipToPadding="false"
+        android:paddingBottom="88dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>
