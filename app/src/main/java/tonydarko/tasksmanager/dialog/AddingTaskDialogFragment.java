@@ -148,6 +148,7 @@ public class AddingTaskDialogFragment extends DialogFragment {
                 if(etDate.length() != 0 || etTitle.length() != 0){
                     modelTask.setDate(calendar.getTimeInMillis());
                 }
+                modelTask.setStatus(ModelTask.STATUS_CURRENT);
                 addingTaskListener.onTaskAdded(modelTask);
                 dialog.dismiss();
             }

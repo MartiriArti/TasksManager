@@ -18,15 +18,19 @@ import tonydarko.tasksmanager.dialog.AddingTaskDialogFragment;
 import tonydarko.tasksmanager.fragments.CurrentTaskFragment;
 import tonydarko.tasksmanager.fragments.DoneTaskFragment;
 import tonydarko.tasksmanager.fragments.SplashFragment;
+import tonydarko.tasksmanager.fragments.TaskFragment;
 import tonydarko.tasksmanager.model.ModelTask;
 
-public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener {
+public class MainActivity extends AppCompatActivity
+        implements AddingTaskDialogFragment.AddingTaskListener, DoneTaskFragment.OnTaskRestoreListener,
+        CurrentTaskFragment.OnTaskDoneListener
+{
     FragmentManager fragmentManager;
     PreferenceHelper preferenceHelper;
     TabAdapter tabAdapter;
 
-    CurrentTaskFragment currentTaskFragment;
-    DoneTaskFragment doneTaskFragment;
+    TaskFragment currentTaskFragment;
+    TaskFragment doneTaskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,5 +137,15 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     @Override
     public void onTaskAddingCancel() {
         Toast.makeText(this, "Task adding cancel", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTaskDone(ModelTask task) {
+        doneTaskFragment.addTask(task);
+    }
+
+    @Override
+    public void onTaskRestore(ModelTask task) {
+        currentTaskFragment.addTask(task);
     }
 }
