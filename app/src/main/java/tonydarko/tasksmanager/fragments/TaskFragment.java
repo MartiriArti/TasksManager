@@ -3,7 +3,7 @@ package tonydarko.tasksmanager.fragments;
 import android.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 
-import tonydarko.tasksmanager.adapters.TaskAdapter;
+import tonydarko.tasksmanager.adapter.TaskAdapter;
 import tonydarko.tasksmanager.model.ModelTask;
 
 public abstract class TaskFragment extends Fragment {

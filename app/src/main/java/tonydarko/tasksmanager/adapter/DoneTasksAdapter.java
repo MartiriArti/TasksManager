@@ -1,4 +1,4 @@
-package tonydarko.tasksmanager.adapters;
+package tonydarko.tasksmanager.adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -16,6 +16,7 @@ import tonydarko.tasksmanager.Utils;
 import tonydarko.tasksmanager.fragments.DoneTaskFragment;
 import tonydarko.tasksmanager.model.Item;
 import tonydarko.tasksmanager.model.ModelTask;
+
 
 public class DoneTasksAdapter extends TaskAdapter {
 

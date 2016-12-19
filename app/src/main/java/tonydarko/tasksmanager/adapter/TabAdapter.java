@@ -1,4 +1,4 @@
-package tonydarko.tasksmanager.adapters;
+package tonydarko.tasksmanager.adapter;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,13 +11,11 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
     private int numberOfTabs;
 
-    public final static int CURRENT_TASK_FRAGMENT_POSITION = 0;
-    public final static int DONE_TASK_FRAGMENT_POSITION = 1;
+    public static final int CURRENT_TASK_FRAGMENT_POSITION = 0;
+    public static final int DONE_TASK_FRAGMENT_POSITION = 1;
 
     private CurrentTaskFragment currentTaskFragment;
     private DoneTaskFragment doneTaskFragment;
-
-
 
     public TabAdapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
@@ -27,14 +25,15 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(int i) {
 
-        switch (position){
+        switch (i) {
             case 0:
                 return currentTaskFragment;
             case 1:
                 return doneTaskFragment;
-            default: return null;
+            default:
+                return null;
         }
     }
 

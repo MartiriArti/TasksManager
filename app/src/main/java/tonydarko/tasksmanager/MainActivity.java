@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import tonydarko.tasksmanager.adapters.TabAdapter;
+import tonydarko.tasksmanager.adapter.TabAdapter;
 import tonydarko.tasksmanager.dialog.AddingTaskDialogFragment;
 import tonydarko.tasksmanager.fragments.CurrentTaskFragment;
 import tonydarko.tasksmanager.fragments.DoneTaskFragment;

@@ -1,5 +1,6 @@
 package tonydarko.tasksmanager.fragments;
 
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import tonydarko.tasksmanager.R;
-import tonydarko.tasksmanager.adapters.DoneTasksAdapter;
+import tonydarko.tasksmanager.adapter.DoneTasksAdapter;
 import tonydarko.tasksmanager.model.ModelTask;
 
+
 public class DoneTaskFragment extends TaskFragment {
+
 
     public DoneTaskFragment() {
         // Required empty public constructor
@@ -20,7 +23,7 @@ public class DoneTaskFragment extends TaskFragment {
 
     OnTaskRestoreListener onTaskRestoreListener;
 
-    public interface OnTaskRestoreListener{
+    public interface OnTaskRestoreListener {
         void onTaskRestore(ModelTask task);
     }
 
@@ -28,11 +31,11 @@ public class DoneTaskFragment extends TaskFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            onTaskRestoreListener = (DoneTaskFragment.OnTaskRestoreListener) activity;
-        }catch (ClassCastException e){
-            throw  new ClassCastException(activity.toString() + " must implement OnTaskRestoreListener");
+            onTaskRestoreListener = (OnTaskRestoreListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnTaskRestoreListener");
         }
-
     }
 
     @Override
@@ -41,14 +44,18 @@ public class DoneTaskFragment extends TaskFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_done_task, container, false);
 
-      recyclerView = (RecyclerView) rootView.findViewById(R.id.rvDoneTasks);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.rvDoneTasks);
+
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new DoneTasksAdapter(this);
         recyclerView.setAdapter(adapter);
+
+        // Inflate the layout for this fragment
         return rootView;
     }
+
 
     @Override
     public void moveTask(ModelTask task) {

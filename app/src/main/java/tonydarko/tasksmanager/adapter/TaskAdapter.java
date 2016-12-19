@@ -1,4 +1,4 @@
-package tonydarko.tasksmanager.adapters;
+package tonydarko.tasksmanager.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,8 +11,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import tonydarko.tasksmanager.fragments.TaskFragment;
 import tonydarko.tasksmanager.model.Item;
 
+
 public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<Item> items;
+
     TaskFragment taskFragment;
 
     public TaskAdapter(TaskFragment taskFragment) {
@@ -35,21 +37,20 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public void removeItem(int location) {
-        if (location >= 0 && location <= getItemCount() - 1){
+        if (location >= 0 && location <= getItemCount() -1) {
             items.remove(location);
             notifyItemRemoved(location);
         }
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return items.size();
     }
 
     protected class TaskViewHolder extends RecyclerView.ViewHolder {
-
-       protected TextView title;
-       protected TextView date;
+        protected TextView title;
+        protected TextView date;
         protected CircleImageView priority;
 
         public TaskViewHolder(View itemView, TextView title, TextView date, CircleImageView priority) {
@@ -60,8 +61,7 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public TaskFragment getTaskFragment(){
+    public TaskFragment getTaskFragment() {
         return taskFragment;
     }
-
 }

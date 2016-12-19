@@ -1,6 +1,8 @@
 package tonydarko.tasksmanager.fragments;
 
+
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import tonydarko.tasksmanager.R;
-import tonydarko.tasksmanager.adapters.CurrentTasksAdapter;
+import tonydarko.tasksmanager.adapter.CurrentTasksAdapter;
 import tonydarko.tasksmanager.model.ModelTask;
 
 public class CurrentTaskFragment extends TaskFragment {
+
+
+
 
     public CurrentTaskFragment() {
         // Required empty public constructor
@@ -20,19 +25,19 @@ public class CurrentTaskFragment extends TaskFragment {
 
     OnTaskDoneListener onTaskDoneListener;
 
-    public interface OnTaskDoneListener{
+    public interface OnTaskDoneListener {
         void onTaskDone(ModelTask task);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-    try {
-        onTaskDoneListener = (OnTaskDoneListener) activity;
-    }catch (ClassCastException e){
-        throw  new ClassCastException(activity.toString() + " must implement OnTaskDoneListener");
-    }
-
+        try {
+            onTaskDoneListener = (OnTaskDoneListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnTaskDoneListener");
+        }
     }
 
     @Override
@@ -42,14 +47,18 @@ public class CurrentTaskFragment extends TaskFragment {
         View rootView = inflater.inflate(R.layout.fragment_current_task, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.rvCurrentTasks);
+
         layoutManager = new LinearLayoutManager(getActivity());
+
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new CurrentTasksAdapter(this);
         recyclerView.setAdapter(adapter);
 
+        // Inflate the layout for this fragment
         return rootView;
     }
+
 
     @Override
     public void moveTask(ModelTask task) {
