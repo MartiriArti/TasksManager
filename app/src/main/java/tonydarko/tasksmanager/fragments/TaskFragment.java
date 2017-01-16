@@ -1,8 +1,10 @@
 package tonydarko.tasksmanager.fragments;
 
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
+import tonydarko.tasksmanager.MainActivity;
 import tonydarko.tasksmanager.adapter.TaskAdapter;
 import tonydarko.tasksmanager.model.ModelTask;
 
@@ -12,8 +14,20 @@ public abstract class TaskFragment extends Fragment {
 
     protected TaskAdapter adapter;
 
+    public MainActivity mainActivity;
 
-    public void addTask(ModelTask newTask) {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (getActivity() != null){
+            mainActivity = (MainActivity) getActivity();
+        }
+
+        addTaskFromDB();
+    }
+
+    public void addTask(ModelTask newTask, boolean saveToDB) {
         int position = -1;
 
         for (int i = 0; i < adapter.getItemCount(); i++) {
@@ -33,7 +47,13 @@ public abstract class TaskFragment extends Fragment {
             adapter.addItem(newTask);
         }
 
+        if (saveToDB){
+            mainActivity.dbHelper.saveTasks(newTask);
+        }
+
     }
+
+    public abstract void addTaskFromDB();
 
     public abstract void moveTask(ModelTask task);
 

@@ -20,15 +20,12 @@ import tonydarko.tasksmanager.model.ModelTask;
 public class CurrentTasksAdapter extends TaskAdapter {
 
 
-
     private static final int TYPE_TASK = 0;
     private static final int TYPE_SEPARATOR = 1;
 
     public CurrentTasksAdapter(CurrentTaskFragment taskFragment) {
         super(taskFragment);
     }
-
-
 
 
     @Override
@@ -80,6 +77,8 @@ public class CurrentTasksAdapter extends TaskAdapter {
                 @Override
                 public void onClick(View v) {
                     task.setStatus(ModelTask.STATUS_DONE);
+                    getTaskFragment().mainActivity.dbHelper.getDbUpdateManager().status(task.getTimeStamp(), ModelTask.STATUS_DONE);
+
 
                     itemView.setBackgroundColor(resources.getColor(R.color.gray_200));
 

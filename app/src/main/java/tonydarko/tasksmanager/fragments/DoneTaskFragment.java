@@ -9,8 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tonydarko.tasksmanager.R;
 import tonydarko.tasksmanager.adapter.DoneTasksAdapter;
+import tonydarko.tasksmanager.database.DBHelper;
 import tonydarko.tasksmanager.model.ModelTask;
 
 
@@ -55,6 +59,20 @@ public class DoneTaskFragment extends TaskFragment {
         // Inflate the layout for this fragment
         return rootView;
     }
+
+
+    @Override
+    public void addTaskFromDB() {
+        List<ModelTask> tasks = new ArrayList<>();
+        tasks.addAll(mainActivity.dbHelper.getDbQueryManager().getTasks(DBHelper.SELECTION_STATUS,
+                new  String[]{Integer.toString(ModelTask.STATUS_CURRENT)}, DBHelper.TASK_DATE_COLUMN));
+
+        for(int i = 0; i < tasks.size(); i++){
+            addTask(tasks.get(i), false);
+        }
+
+    }
+
 
 
     @Override

@@ -196,8 +196,6 @@ public class AddingTaskDialogFragment extends DialogFragment {
                 });
             }
         });
-
-
         return alertDialog;
     }
 }
