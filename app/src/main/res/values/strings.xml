@@ -6,4 +6,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="current_tasks">Текущие</string>
     <string name="done_tasks">Выполненые</string>
+    <string name="dialog_removing_message">Delete this task?</string>
+    <string name="removed">Removed</string>
+    <string name="dialog_ok">Ok</string>
+    <string name="dialog_cancel">Cancel</string>
+
 </resources>

@@ -2,7 +2,6 @@ package tonydarko.tasksmanager.fragments;
 
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -67,7 +66,7 @@ public class CurrentTaskFragment extends TaskFragment {
     @Override
     public void addTaskFromDB() {
         List<ModelTask> tasks = new ArrayList<>();
-        tasks.addAll(mainActivity.dbHelper.getDbQueryManager().getTasks(DBHelper.SELECTION_STATUS + " OR "
+        tasks.addAll(activity.dbHelper.query().getTasks(DBHelper.SELECTION_STATUS + " OR "
          + DBHelper.SELECTION_STATUS, new  String[]{Integer.toString(ModelTask.STATUS_CURRENT),
         Integer.toString(ModelTask.STATUS_OVERDUE)}, DBHelper.TASK_DATE_COLUMN));
 

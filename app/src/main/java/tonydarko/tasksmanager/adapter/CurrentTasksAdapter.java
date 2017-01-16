@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,12 @@ import tonydarko.tasksmanager.model.ModelTask;
 
 public class CurrentTasksAdapter extends TaskAdapter {
 
-
     private static final int TYPE_TASK = 0;
     private static final int TYPE_SEPARATOR = 1;
 
     public CurrentTasksAdapter(CurrentTaskFragment taskFragment) {
         super(taskFragment);
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -37,7 +36,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
                         .inflate(R.layout.model_task, viewGroup, false);
                 TextView title = (TextView) v.findViewById(R.id.tvTaskTitle);
                 TextView date = (TextView) v.findViewById(R.id.tvTaskDate);
-                CircleImageView priority = (CircleImageView) v.findViewById(R.id.cvTaskPrioriti);
+                CircleImageView priority = (CircleImageView) v.findViewById(R.id.cvTaskPriority);
 
                 return new TaskViewHolder(v, title, date, priority);
             default:
@@ -73,12 +72,26 @@ public class CurrentTasksAdapter extends TaskAdapter {
             taskViewHolder.priority.setColorFilter(resources.getColor(task.getPriorityColor()));
             taskViewHolder.priority.setImageResource(R.drawable.ic_check_circle_white_48dp);
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getTaskFragment().removeTaskDialog(taskViewHolder.getLayoutPosition());
+                        }
+                    }, 1000);
+
+                    return true;
+                }
+            });
+
             taskViewHolder.priority.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     task.setStatus(ModelTask.STATUS_DONE);
-                    getTaskFragment().mainActivity.dbHelper.getDbUpdateManager().status(task.getTimeStamp(), ModelTask.STATUS_DONE);
-
+                    getTaskFragment().activity.dbHelper.update().status(task.getTimeStamp(), ModelTask.STATUS_DONE);
 
                     itemView.setBackgroundColor(resources.getColor(R.color.gray_200));
 
@@ -156,6 +169,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
         }
 
     }
+
 
 
     @Override

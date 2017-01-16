@@ -64,7 +64,7 @@ public class DoneTaskFragment extends TaskFragment {
     @Override
     public void addTaskFromDB() {
         List<ModelTask> tasks = new ArrayList<>();
-        tasks.addAll(mainActivity.dbHelper.getDbQueryManager().getTasks(DBHelper.SELECTION_STATUS,
+        tasks.addAll(activity.dbHelper.query().getTasks(DBHelper.SELECTION_STATUS,
                 new  String[]{Integer.toString(ModelTask.STATUS_CURRENT)}, DBHelper.TASK_DATE_COLUMN));
 
         for(int i = 0; i < tasks.size(); i++){

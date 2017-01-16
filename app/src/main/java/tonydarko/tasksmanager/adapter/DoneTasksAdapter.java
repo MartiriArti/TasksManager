@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,6 @@ import tonydarko.tasksmanager.Utils;
 import tonydarko.tasksmanager.fragments.DoneTaskFragment;
 import tonydarko.tasksmanager.model.Item;
 import tonydarko.tasksmanager.model.ModelTask;
-
 
 public class DoneTasksAdapter extends TaskAdapter {
 
@@ -33,7 +33,7 @@ public class DoneTasksAdapter extends TaskAdapter {
                 .inflate(R.layout.model_task, viewGroup, false);
         TextView title = (TextView) v.findViewById(R.id.tvTaskTitle);
         TextView date = (TextView) v.findViewById(R.id.tvTaskDate);
-        CircleImageView priority = (CircleImageView) v.findViewById(R.id.cvTaskPrioriti);
+        CircleImageView priority = (CircleImageView) v.findViewById(R.id.cvTaskPriority);
 
         return new TaskViewHolder(v, title, date, priority);
 
@@ -68,11 +68,26 @@ public class DoneTasksAdapter extends TaskAdapter {
             taskViewHolder.priority.setColorFilter(resources.getColor(task.getPriorityColor()));
             taskViewHolder.priority.setImageResource(R.drawable.ic_check_circle_white_48dp);
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getTaskFragment().removeTaskDialog(taskViewHolder.getLayoutPosition());
+                        }
+                    }, 1000);
+
+                    return true;
+                }
+            });
+
             taskViewHolder.priority.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     task.setStatus(ModelTask.STATUS_CURRENT);
-                    getTaskFragment().mainActivity.dbHelper.getDbUpdateManager().status(task.getTimeStamp(), ModelTask.STATUS_CURRENT);
+                    getTaskFragment().activity.dbHelper.update().status(task.getTimeStamp(), ModelTask.STATUS_CURRENT);
 
                     itemView.setBackgroundColor(resources.getColor(R.color.gray_50));
 
