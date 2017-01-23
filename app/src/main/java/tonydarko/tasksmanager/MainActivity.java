@@ -18,6 +18,7 @@ import tonydarko.tasksmanager.adapter.TabAdapter;
 import tonydarko.tasksmanager.alarm.AlarmHelper;
 import tonydarko.tasksmanager.database.DBHelper;
 import tonydarko.tasksmanager.dialog.AddingTaskDialogFragment;
+import tonydarko.tasksmanager.dialog.EditTaskDialogFragment;
 import tonydarko.tasksmanager.fragments.CurrentTaskFragment;
 import tonydarko.tasksmanager.fragments.DoneTaskFragment;
 import tonydarko.tasksmanager.fragments.SplashFragment;
@@ -26,7 +27,7 @@ import tonydarko.tasksmanager.model.ModelTask;
 
 public class MainActivity extends AppCompatActivity
         implements AddingTaskDialogFragment.AddingTaskListener, DoneTaskFragment.OnTaskRestoreListener,
-        CurrentTaskFragment.OnTaskDoneListener
+        CurrentTaskFragment.OnTaskDoneListener, EditTaskDialogFragment.EditingTaskListener
 {
     FragmentManager fragmentManager;
     PreferenceHelper preferenceHelper;
@@ -185,5 +186,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onTaskRestore(ModelTask task) {
         currentTaskFragment.addTask(task, false);
+    }
+
+    @Override
+    public void onTaskEdited(ModelTask updatedTask) {
+        currentTaskFragment.updateTask(updatedTask);
+        dbHelper.update().task(updatedTask);
     }
 }

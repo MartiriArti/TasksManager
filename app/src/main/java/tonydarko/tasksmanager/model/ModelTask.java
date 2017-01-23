@@ -23,6 +23,15 @@ public class ModelTask implements Item{
     private int priority;
     private int status;
     private long timeStamp;
+    private int dateStatus;
+
+    public int getDateStatus() {
+        return dateStatus;
+    }
+
+    public void setDateStatus(int dateStatus) {
+        this.dateStatus = dateStatus;
+    }
 
     public long getTimeStamp() {
         return timeStamp;

@@ -26,31 +26,51 @@ import tonydarko.tasksmanager.Utils;
 import tonydarko.tasksmanager.alarm.AlarmHelper;
 import tonydarko.tasksmanager.model.ModelTask;
 
-public class AddingTaskDialogFragment extends DialogFragment {
+public class EditTaskDialogFragment extends DialogFragment {
 
-    private AddingTaskListener addingTaskListener;
+    public static EditTaskDialogFragment newInstance(ModelTask task) {
+        EditTaskDialogFragment editTaskDialogFragment = new EditTaskDialogFragment();
 
-    public interface AddingTaskListener {
-        void onTaskAdded(ModelTask newTask);
-        void onTaskAddingCancel();
+        Bundle args = new Bundle();
+        args.putString("title", task.getTitle());
+        args.putLong("date", task.getDate());
+        args.putInt("priority", task.getPriority());
+        args.putLong("time_stamp", task.getTimeStamp());
+
+        editTaskDialogFragment.setArguments(args);
+        return editTaskDialogFragment;
+    }
+
+    private EditingTaskListener editingTaskListener;
+
+    public interface EditingTaskListener {
+        void onTaskEdited(ModelTask updatedTask);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            addingTaskListener = (AddingTaskListener) activity;
+            editingTaskListener = (EditingTaskListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement AddingTaskListener");
+            throw new ClassCastException(activity.toString() + " must implement EditingTaskListener");
         }
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        Bundle args = getArguments();
+        String title = args.getString("title");
+        long date = args.getLong("date", 0);
+        int priority = args.getInt("priority", 0);
+        long timeStamp = args.getLong("time_stamp", 0);
+
+        final ModelTask task = new ModelTask(title, date, priority, 0, timeStamp);
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle(R.string.dialog_title);
+        builder.setTitle("Edit");
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -59,7 +79,7 @@ public class AddingTaskDialogFragment extends DialogFragment {
         final TextInputLayout tilTitle = (TextInputLayout) container.findViewById(R.id.tillDialogTaskTitle);
         final EditText etTitle = tilTitle.getEditText();
 
-        final TextInputLayout tilDate = (TextInputLayout) container.findViewById(R.id.tillDialogTaskDate);
+        TextInputLayout tilDate = (TextInputLayout) container.findViewById(R.id.tillDialogTaskDate);
         final EditText etDate = tilDate.getEditText();
 
         final TextInputLayout tilTime = (TextInputLayout) container.findViewById(R.id.tillDialogTaskTime);
@@ -68,19 +88,28 @@ public class AddingTaskDialogFragment extends DialogFragment {
         Spinner spPriority = (Spinner) container.findViewById(R.id.spDialogTaskPriority);
 
 
+        etTitle.setText(task.getTitle());
+        etTitle.setSelection(etTitle.length());
+        if (task.getDate() != 0) {
+            etDate.setText(Utils.getDate(task.getDate()));
+            etTime.setText(Utils.getTime(task.getDate()));
+        }
+
+
         tilTitle.setHint(getResources().getString(R.string.task_title));
         tilDate.setHint(getResources().getString(R.string.task_date));
         tilTime.setHint(getResources().getString(R.string.task_time));
 
         builder.setView(container);
 
-        final ModelTask task = new ModelTask();
 
 
         ArrayAdapter<String> priorityAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, ModelTask.PRIORITY_LEVELS);
 
         spPriority.setAdapter(priorityAdapter);
+
+        spPriority.setSelection(task.getPriority());
 
         spPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -96,12 +125,15 @@ public class AddingTaskDialogFragment extends DialogFragment {
 
         final Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 1);
+        if (etDate.length() != 0 || etTime.length() != 0) {
+            calendar.setTimeInMillis(task.getDate());
+        }
 
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (etDate.length() == 0) {
-                    etDate.setText("");
+                    etDate.setText(" ");
                 }
 
                 DialogFragment datePickerFragment = new DatePickerFragment() {
@@ -158,7 +190,7 @@ public class AddingTaskDialogFragment extends DialogFragment {
                     alarmHelper.setAlarm(task);
                 }
                 task.setStatus(ModelTask.STATUS_CURRENT);
-                addingTaskListener.onTaskAdded(task);
+                editingTaskListener.onTaskEdited(task);
                 dialog.dismiss();
             }
         });
@@ -166,7 +198,6 @@ public class AddingTaskDialogFragment extends DialogFragment {
         builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addingTaskListener.onTaskAddingCancel();
                 dialog.cancel();
             }
         });
