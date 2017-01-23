@@ -11,6 +11,7 @@ import android.view.View;
 import tonydarko.tasksmanager.MainActivity;
 import tonydarko.tasksmanager.R;
 import tonydarko.tasksmanager.adapter.TaskAdapter;
+import tonydarko.tasksmanager.alarm.AlarmHelper;
 import tonydarko.tasksmanager.model.Item;
 import tonydarko.tasksmanager.model.ModelTask;
 
@@ -22,6 +23,8 @@ public abstract class TaskFragment extends Fragment {
 
     public MainActivity activity;
 
+    public AlarmHelper alarmHelper;
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -31,13 +34,15 @@ public abstract class TaskFragment extends Fragment {
             activity = (MainActivity) getActivity();
         }
 
+        alarmHelper = AlarmHelper.getInstance();
+
         addTaskFromDB();
     }
 
     public void addTask(ModelTask newTask, boolean saveToDB) {
         int position = -1;
 
-        for (int i = 0; i < adapter.getItemCount(); i ++) {
+        for (int i = 0; i < adapter.getItemCount(); i++) {
             if (adapter.getItem(i).isTask()) {
                 ModelTask task = (ModelTask) adapter.getItem(i);
                 if (newTask.getDate() < task.getDate()) {
@@ -97,7 +102,9 @@ public abstract class TaskFragment extends Fragment {
                         @Override
                         public void onViewDetachedFromWindow(View v) {
                             if (isRemoved[0]) {
+                                alarmHelper.removeAlarm(timeStamp);
                                 activity.dbHelper.removeTask(timeStamp);
+
                             }
                         }
                     });
@@ -121,6 +128,7 @@ public abstract class TaskFragment extends Fragment {
 
         dialogBuilder.show();
     }
+
 
     public abstract void findTasks(String title);
 

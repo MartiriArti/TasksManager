@@ -3,6 +3,7 @@ package tonydarko.tasksmanager.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,8 +18,9 @@ import tonydarko.tasksmanager.adapter.DoneTasksAdapter;
 import tonydarko.tasksmanager.database.DBHelper;
 import tonydarko.tasksmanager.model.ModelTask;
 
-
 public class DoneTaskFragment extends TaskFragment {
+
+
 
 
     public DoneTaskFragment() {
@@ -66,11 +68,9 @@ public class DoneTaskFragment extends TaskFragment {
         adapter.removeAllItems();
         List<ModelTask> tasks = new ArrayList<>();
         tasks.addAll(activity.dbHelper.query().getTasks(DBHelper.SELECTION_LIKE_TITLE + " AND "
-                + DBHelper.SELECTION_STATUS,
-                new  String[]{"%" + title + "%",Integer.toString(ModelTask.STATUS_CURRENT)},
-                DBHelper.TASK_DATE_COLUMN));
-
-        for(int i = 0; i < tasks.size(); i++){
+                        + DBHelper.SELECTION_STATUS, new String[]{"%" + title + "%",
+                Integer.toString(ModelTask.STATUS_DONE)}, DBHelper.TASK_DATE_COLUMN));
+        for (int i = 0; i < tasks.size(); i++) {
             addTask(tasks.get(i), false);
         }
     }
@@ -80,18 +80,18 @@ public class DoneTaskFragment extends TaskFragment {
         adapter.removeAllItems();
         List<ModelTask> tasks = new ArrayList<>();
         tasks.addAll(activity.dbHelper.query().getTasks(DBHelper.SELECTION_STATUS,
-                new  String[]{Integer.toString(ModelTask.STATUS_CURRENT)}, DBHelper.TASK_DATE_COLUMN));
-
-        for(int i = 0; i < tasks.size(); i++){
+                new String[]{Integer.toString(ModelTask.STATUS_DONE)}, DBHelper.TASK_DATE_COLUMN));
+        for (int i = 0; i < tasks.size(); i++) {
             addTask(tasks.get(i), false);
         }
-
     }
-
 
 
     @Override
     public void moveTask(ModelTask task) {
+        if (task.getDate() != 0) {
+            alarmHelper.setAlarm(task);
+        }
         onTaskRestoreListener.onTaskRestore(task);
     }
 }

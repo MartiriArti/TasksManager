@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import tonydarko.tasksmanager.adapter.TabAdapter;
+import tonydarko.tasksmanager.alarm.AlarmHelper;
 import tonydarko.tasksmanager.database.DBHelper;
 import tonydarko.tasksmanager.dialog.AddingTaskDialogFragment;
 import tonydarko.tasksmanager.fragments.CurrentTaskFragment;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
 
+        AlarmHelper.getInstance().init(getApplicationContext());
+
         dbHelper = new DBHelper(getApplicationContext());
 
         fragmentManager = getFragmentManager();
@@ -53,6 +56,18 @@ public class MainActivity extends AppCompatActivity
         runSplash();
 
         setUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TaskManagerApplication.activityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TaskManagerApplication.activityPaused();
     }
 
     @Override
