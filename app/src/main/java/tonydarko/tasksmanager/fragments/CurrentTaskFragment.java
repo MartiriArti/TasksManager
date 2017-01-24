@@ -103,31 +103,51 @@ public class CurrentTaskFragment extends TaskFragment {
         }
 
 
-        if (newTask.getDate() != 0) {
+        if (newTask.getDate() !=  0){
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(newTask.getDate());
-
-            if (calendar.get(Calendar.DAY_OF_YEAR) < Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+            if (calendar.get(Calendar.YEAR) < Calendar.getInstance().get(Calendar.YEAR) ){
                 newTask.setDateStatus(ModelSeparator.TYPE_OVERDUE);
                 if (!adapter.containsSeparatorOverdue) {
                     adapter.containsSeparatorOverdue = true;
                     separator = new ModelSeparator(ModelSeparator.TYPE_OVERDUE);
                 }
-            } else if (calendar.get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+            }
+            else if (calendar.get(Calendar.YEAR) > Calendar.getInstance().get(Calendar.YEAR) ){
+                newTask.setDateStatus(ModelSeparator.TYPE_FUTURE);
+                if (!adapter.containsSeparatorFuture) {
+                    adapter.containsSeparatorFuture = true;
+                    separator = new ModelSeparator(ModelSeparator.TYPE_FUTURE);
+                }
+            }
+            else if (calendar.get(Calendar.DAY_OF_YEAR) < Calendar.getInstance().get(Calendar.DAY_OF_YEAR) &&
+                    calendar.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR) ){
+                newTask.setDateStatus(ModelSeparator.TYPE_OVERDUE);
+                if (!adapter.containsSeparatorOverdue) {
+                    adapter.containsSeparatorOverdue = true;
+                    separator = new ModelSeparator(ModelSeparator.TYPE_OVERDUE);
+                }
+            }
+            else if (calendar.get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR) &&
+                    calendar.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)){
                 newTask.setDateStatus(ModelSeparator.TYPE_TODAY);
                 if (!adapter.containsSeparatorToday) {
                     adapter.containsSeparatorToday = true;
                     separator = new ModelSeparator(ModelSeparator.TYPE_TODAY);
                 }
-            } else if (calendar.get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR) + 1) {
+            }
+            else if (calendar.get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR) + 1 &&
+                    calendar.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)){
                 newTask.setDateStatus(ModelSeparator.TYPE_TOMORROW);
-                if (!adapter.containsSeparatorTomorrow) {
+                if (!adapter.containsSeparatorTomorrow){
                     adapter.containsSeparatorTomorrow = true;
                     separator = new ModelSeparator(ModelSeparator.TYPE_TOMORROW);
                 }
-            } else if (calendar.get(Calendar.DAY_OF_YEAR) > Calendar.getInstance().get(Calendar.DAY_OF_YEAR) + 1) {
-                newTask.setDateStatus(ModelSeparator.TYPE_TOMORROW);
-                if (!adapter.containsSeparatorFuture) {
+            }
+            else if (calendar.get(Calendar.DAY_OF_YEAR) > Calendar.getInstance().get(Calendar.DAY_OF_YEAR) + 1 &&
+                    calendar.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)){
+                newTask.setDateStatus(ModelSeparator.TYPE_FUTURE);
+                if (!adapter.containsSeparatorFuture){
                     adapter.containsSeparatorFuture = true;
                     separator = new ModelSeparator(ModelSeparator.TYPE_FUTURE);
                 }

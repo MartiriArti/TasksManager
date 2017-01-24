@@ -24,7 +24,7 @@ import tonydarko.tasksmanager.model.ModelTask;
 public class CurrentTasksAdapter extends TaskAdapter {
 
 
-
+    private static final int DELETE_TIME = 200;
     private static final int TYPE_TASK = 0;
     private static final int TYPE_SEPARATOR = 1;
 
@@ -109,7 +109,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
                         public void run() {
                             getTaskFragment().removeTaskDialog(taskViewHolder.getLayoutPosition());
                         }
-                    }, 1000);
+                    }, DELETE_TIME);
 
                     return true;
                 }

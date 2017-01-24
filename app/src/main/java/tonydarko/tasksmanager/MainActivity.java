@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onTaskAddingCancel() {
-        Toast.makeText(this, "Task adding cancel", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.cancel_adding_task, Toast.LENGTH_LONG).show();
     }
 
     @Override

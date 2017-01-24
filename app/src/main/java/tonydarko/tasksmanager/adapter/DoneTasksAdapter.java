@@ -25,6 +25,8 @@ public class DoneTasksAdapter extends TaskAdapter {
         super(taskFragment);
     }
 
+    private static final int DELETE_TIME = 200;
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
@@ -76,7 +78,7 @@ public class DoneTasksAdapter extends TaskAdapter {
                         public void run() {
                             getTaskFragment().removeTaskDialog(taskViewHolder.getLayoutPosition());
                         }
-                    }, 1000);
+                    }, DELETE_TIME);
 
                     return true;
                 }

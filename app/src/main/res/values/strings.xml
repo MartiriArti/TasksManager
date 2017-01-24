@@ -1,29 +1,22 @@
 <resources>
     <string name="app_name">TasksManager</string>
     <string name="do_not_show_splash">Отключить заставку</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="current_tasks">Текущие</string>
     <string name="done_tasks">Выполненые</string>
-    <string name="dialog_removing_message">Delete this task?</string>
-    <string name="removed">Removed</string>
-    <string name="dialog_ok">Ok</string>
-    <string name="dialog_cancel">Cancel</string>
-
-    <string name="current_task">Current</string>
-    <string name="done_task">Done</string>
-
-    <string name="dialog_title">Adding task</string>
-
-    <string name="dialog_error_empty_title">Please, enter the title.</string>
-
-    <string name="task_title">Title</string>
-    <string name="task_date">Date</string>
-    <string name="task_time">Time</string>
-    <string name="separator_overdue">Overdue</string>
-    <string name="separator_today">Today</string>
-    <string name="separator_tomorrow">Tomorrow</string>
-    <string name="separator_future">Future</string>
-
+    <string name="dialog_removing_message">Удалить эту задачу?</string>
+    <string name="removed">Удалено</string>
+    <string name="dialog_ok">Принять</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="current_task">Текущие</string>
+    <string name="done_task">Выполненые</string>
+    <string name="dialog_title">Добавление задачи</string>
+    <string name="dialog_error_empty_title">Пожалуйста, введите название.</string>
+    <string name="task_title">Название</string>
+    <string name="task_date">Дата</string>
+    <string name="task_time">Время</string>
+    <string name="separator_overdue">Невыполненые</string>
+    <string name="separator_today">Сегодня</string>
+    <string name="separator_tomorrow">Завтра</string>
+    <string name="separator_future">В будующем</string>
+    <string name="cancel_adding_task">Добавление задачи отменено</string>
 </resources>
