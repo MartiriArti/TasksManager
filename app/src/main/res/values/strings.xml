@@ -19,4 +19,10 @@
     <string name="separator_tomorrow">Завтра</string>
     <string name="separator_future">В будующем</string>
     <string name="cancel_adding_task">Добавление задачи отменено</string>
+    <string name="change_lang">Сменить язык</string>
+    <string name="change_color_theme">Сменить цвета</string>
+    <string name="banner">Просмотр рекламы</string>
+    <string name="low_priority">Не важное</string>
+    <string name="norm_priority">Умеренное</string>
+    <string name="hight_priority">Важное</string>
 </resources>
