@@ -1,5 +1,6 @@
 package tonydarko.tasksmanager.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -104,6 +105,7 @@ public class AddingTaskDialogFragment extends DialogFragment {
                     etDate.setText("");
                 }
 
+                @SuppressLint("validFragment")
                 DialogFragment datePickerFragment = new DatePickerFragment() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -128,6 +130,8 @@ public class AddingTaskDialogFragment extends DialogFragment {
                 if (etTime.length() == 0) {
                     etTime.setText(" ");
                 }
+
+                @SuppressLint("validFragment")
                 DialogFragment timePickerFragment = new TimePickerFragment() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
